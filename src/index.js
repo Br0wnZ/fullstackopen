@@ -23,15 +23,23 @@ const Statics = ({ statics }) => {
   const good = statics.values[0]
   const neutral = statics.values[1]
   const bad = statics.values[2]
+  if ((good + neutral + bad) > 0) {
+    return (
+      <>
+        <h3>{statics.header}</h3>
+        <Item text={statics.states[0]} count={statics.values[0]} />
+        <Item text={statics.states[1]} count={statics.values[1]} />
+        <Item text={statics.states[2]} count={statics.values[2]} />
+        <Item text={statics.states[3]} count={good + neutral + bad} />
+        <Calculated text={statics.states[4]} count={(good - bad) / (good + neutral + bad)} />
+        <Calculated text={statics.states[5]} count={(good / (good + neutral + bad)) * 100} />
+      </>
+    )
+  }
   return (
     <>
-      <h3>{statics.header}</h3>
-      <Item text={statics.states[0]} count={statics.values[0]} />
-      <Item text={statics.states[1]} count={statics.values[1]} />
-      <Item text={statics.states[2]} count={statics.values[2]} />
-      <Item text={statics.states[3]} count={good + neutral + bad} />
-      <Calculated text={statics.states[4]} count={(good - bad) / (good + neutral + bad)} />
-      <Calculated text={statics.states[5]} count={(good / (good + neutral + bad)) * 100} />
+    <h3>{statics.header}</h3>
+    <p>No feedback given</p>
     </>
   )
 }
