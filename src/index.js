@@ -5,17 +5,44 @@ const Header = ({ header }) => { return (<> <h1>{header}</h1></>) }
 
 const Button = ({ handlerClick, text }) => { return (<button onClick={handlerClick}>{text}</button>) }
 
-const Statistic = ({ text, count }) => { return (<p>{text} {count}</p>) }
+const Statistic = ({ text, count }) => {
+  return (
+    <>
+      <tr>
+        <td>
+          {text}
+        </td>
+        <td>
+          {count}
+        </td>
+      </tr>
+    </>
+  )
+}
 
 
 const Calculated = ({ text, count }) => {
   if (count) {
     return (
-      <p>{text} {count}%</p>
+      <tr>
+        <td>
+          {text}
+        </td>
+        <td>
+          {count}%
+        </td>
+      </tr>
     )
   }
   return (
-    <p>{text} 0</p>
+    <tr>
+      <td>
+        {text}
+      </td>
+      <td>
+        0
+        </td>
+    </tr>
   )
 }
 
@@ -27,19 +54,23 @@ const Statics = ({ statics }) => {
     return (
       <>
         <h3>{statics.header}</h3>
-        <Statistic text={statics.states[0]} count={statics.values[0]} />
-        <Statistic text={statics.states[1]} count={statics.values[1]} />
-        <Statistic text={statics.states[2]} count={statics.values[2]} />
-        <Statistic text={statics.states[3]} count={good + neutral + bad} />
-        <Calculated text={statics.states[4]} count={(good - bad) / (good + neutral + bad)} />
-        <Calculated text={statics.states[5]} count={(good / (good + neutral + bad)) * 100} />
+        <table>
+          <tbody>
+            <Statistic text={statics.states[0]} count={statics.values[0]} />
+            <Statistic text={statics.states[1]} count={statics.values[1]} />
+            <Statistic text={statics.states[2]} count={statics.values[2]} />
+            <Statistic text={statics.states[3]} count={good + neutral + bad} />
+            <Calculated text={statics.states[4]} count={(good - bad) / (good + neutral + bad)} />
+            <Calculated text={statics.states[5]} count={(good / (good + neutral + bad)) * 100} />
+          </tbody>
+        </table>
       </>
     )
   }
   return (
     <>
-    <h3>{statics.header}</h3>
-    <p>No feedback given</p>
+      <h3>{statics.header}</h3>
+      <p>No feedback given</p>
     </>
   )
 }
