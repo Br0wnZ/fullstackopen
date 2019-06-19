@@ -5,7 +5,7 @@ const Header = ({ header }) => { return (<> <h1>{header}</h1></>) }
 
 const Button = ({ handlerClick, text }) => { return (<button onClick={handlerClick}>{text}</button>) }
 
-const Item = ({ text, count }) => { return (<p>{text} {count}</p>) }
+const Statistic = ({ text, count }) => { return (<p>{text} {count}</p>) }
 
 
 const Calculated = ({ text, count }) => {
@@ -27,10 +27,10 @@ const Statics = ({ statics }) => {
     return (
       <>
         <h3>{statics.header}</h3>
-        <Item text={statics.states[0]} count={statics.values[0]} />
-        <Item text={statics.states[1]} count={statics.values[1]} />
-        <Item text={statics.states[2]} count={statics.values[2]} />
-        <Item text={statics.states[3]} count={good + neutral + bad} />
+        <Statistic text={statics.states[0]} count={statics.values[0]} />
+        <Statistic text={statics.states[1]} count={statics.values[1]} />
+        <Statistic text={statics.states[2]} count={statics.values[2]} />
+        <Statistic text={statics.states[3]} count={good + neutral + bad} />
         <Calculated text={statics.states[4]} count={(good - bad) / (good + neutral + bad)} />
         <Calculated text={statics.states[5]} count={(good / (good + neutral + bad)) * 100} />
       </>
