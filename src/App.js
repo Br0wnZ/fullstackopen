@@ -1,5 +1,35 @@
 import React, { useState } from 'react'
 
+const Filter = ({fun}) =>  {
+  return (
+  <input onChange={fun}/> 
+  )
+}
+
+const Form = ({submit, name, phone}) => {
+  return (
+    <form onSubmit={submit}>
+        <div>
+          name: <input onChange={name} />
+        </div>
+        <div>
+          phone: <input onChange={phone} />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+  )
+}
+
+const Persons = ({persons}) => {
+  return (
+    <ul>
+      {persons.map((p, i) => <li key={i}>{p.name} : {p.phone}</li>)}
+    </ul>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', phone: '123456789' }
@@ -41,23 +71,17 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <input onChange={filterNames}/>
+
+      <Filter fun={filterNames}/>
+
       <h3>Add new</h3>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input onChange={handleNameChange} />
-        </div>
-        <div>
-          phone: <input onChange={handlePhoneChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+
+      <Form submit={addPerson} name={handleNameChange} phone={handlePhoneChange}/>
+      
       <h2>Numbers</h2>
-      <ul>
-        {persons.map((p, i) => <li key={i}>{p.name.includes({})} : {p.phone}</li>)}
-      </ul>
+
+      <Persons persons={persons} />
+      
     </div>
   )
 }
