@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 const anecdotes = [
@@ -10,18 +10,28 @@ const anecdotes = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
-const App = (props) => {
-  const [selected, setSelected] = useState(0)
+const points = Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf,0)
 
-  const randomAnecdote = (number) => () => {
-    setSelected(number)
+const App = (props) => {
+  
+  const [selected, setSelected] = useState(0)
+  const [votes, setVoted] = useState(points)
+  
+  const randomAnecdote = () => () => {
+    setSelected(Math.floor(Math.random() * (0 - 5)) + 5)
+  }
+  
+  const voteAnecdote = () => () => {
+    votes[selected] += 1
+    setVoted(votes => [...votes])
   }
 
   return (
     <div>
-      {props.anecdotes[selected]}
+      {votes[selected]}{props.anecdotes[selected]}
       <br></br>
-      <button onClick={randomAnecdote(Math.round(Math.random() * (0 - 5) + 5))}>Next anecdote</button>
+      <button onClick={voteAnecdote()}>Vote</button>
+      <button onClick={randomAnecdote()}>Next anecdote</button>
     </div>
   )
 }
