@@ -15,6 +15,14 @@ const App = () => {
     setNewPhone(event.target.value)
   }
 
+  const filterNames = (event) => {
+    if (event.target.value !== '') {
+      setPersons(persons.filter(p => p.name.includes(event.target.value)))
+    } else {
+      setPersons(persons)
+    }
+  }
+
   const addPerson = (event) => {
     event.preventDefault()
     let person = {
@@ -33,6 +41,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <input onChange={filterNames}/>
+      <h3>Add new</h3>
       <form onSubmit={addPerson}>
         <div>
           name: <input onChange={handleNameChange} />
@@ -46,7 +56,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((p, i) => <li key={i}>{p.name} : {p.phone}</li>)}
+        {persons.map((p, i) => <li key={i}>{p.name.includes({})} : {p.phone}</li>)}
       </ul>
     </div>
   )
