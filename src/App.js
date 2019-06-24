@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import Form from './components/Form'
 
+import axios from 'axios'
+
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', phone: '123456789' },
-    { name: 'Arto Hellas2', phone: '123456789' },
-    { name: 'Arto Hellas3', phone: '123456789' }
-  ])
+
+  const [persons, setPersons] = useState([])
   const [personsFilter, setPersonsFilters] = useState([])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons').then(res => {
+      setPersons(res.data)
+    })
+  }, [])
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -45,7 +50,7 @@ const App = () => {
   }
 
   const removePerson = (event) => {
-    let index = persons.findIndex(p => p.name === event.target.id) 
+    let index = persons.findIndex(p => p.name === event.target.id)
     let deletePerson = persons.splice(index, 1)
     setPersons(persons.filter(p => p.name !== deletePerson))
   }
@@ -62,7 +67,7 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Persons persons={personsFilter.length ? personsFilter : persons} removePerson={removePerson}/>
+      <Persons persons={personsFilter.length ? personsFilter : persons} removePerson={removePerson} />
 
     </div>
   )
