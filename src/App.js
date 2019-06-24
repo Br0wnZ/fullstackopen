@@ -4,6 +4,7 @@ import Filter from './components/Filter'
 import Form from './components/Form'
 
 import axios from 'axios'
+import phoneBookService from './services/phonebook'
 
 const App = () => {
 
@@ -38,13 +39,14 @@ const App = () => {
     event.preventDefault()
     let person = {
       name: newName,
-      phone: newPhone
+      number: newPhone
     }
 
     if (persons.find(p => p.name === person.name)) {
       alert(`${person.name} is already added to phonebook`)
     } else {
       persons.push(person)
+      phoneBookService.create(person).then(() => {})
       setPersons(persons => [...persons])
     }
   }
