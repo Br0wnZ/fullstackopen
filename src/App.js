@@ -3,7 +3,6 @@ import Persons from './components/Persons'
 import Filter from './components/Filter'
 import Form from './components/Form'
 
-import axios from 'axios'
 import phoneBookService from './services/phonebook'
 
 const App = () => {
@@ -14,9 +13,7 @@ const App = () => {
   const [newPhone, setNewPhone] = useState('')
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons').then(res => {
-      setPersons(res.data)
-    })
+    phoneBookService.getAll().then(res => setPersons(res))
   }, [])
 
   const handleNameChange = (event) => {
