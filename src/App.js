@@ -40,7 +40,11 @@ const App = () => {
     }
 
     if (persons.find(p => p.name === person.name)) {
-      alert(`${person.name} is already added to phonebook`)
+      let per = { ...persons.find(p => p.name === person.name), number: newPhone }
+      window.confirm(`${person.name} is already added to phonebook, replace
+      the old number with a new one?`)
+      phoneBookService.update(per)
+        .then(() => { phoneBookService.getAll().then(() => { }) })
     } else {
       phoneBookService.create(person).then(() => {
         phoneBookService.getAll().then(res => setPersons(res))
