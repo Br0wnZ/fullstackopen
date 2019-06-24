@@ -42,16 +42,18 @@ const App = () => {
     if (persons.find(p => p.name === person.name)) {
       alert(`${person.name} is already added to phonebook`)
     } else {
-      persons.push(person)
-      phoneBookService.create(person).then(() => {})
-      setPersons(persons => [...persons])
+      phoneBookService.create(person).then(() => {
+        phoneBookService.getAll().then(res => setPersons(res))
+      })
     }
   }
 
   const removePerson = (event) => {
-    let index = persons.findIndex(p => p.name === event.target.id)
-    let deletePerson = persons.splice(index, 1)
-    setPersons(persons.filter(p => p.name !== deletePerson))
+    phoneBookService.getPerson(event.target.id).then(res => {
+      window.confirm(`Delete ${res.name}?`)
+      phoneBookService.remove(res.id).then(() =>
+        phoneBookService.getAll().then(res => setPersons(res)))
+    })
   }
 
   return (
