@@ -5,12 +5,15 @@ import Form from './components/Form'
 
 import phoneBookService from './services/phonebook'
 
+import './index.css'
+
 const App = () => {
 
   const [persons, setPersons] = useState([])
   const [personsFilter, setPersonsFilters] = useState([])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     phoneBookService.getAll().then(res => setPersons(res))
@@ -44,10 +47,16 @@ const App = () => {
       window.confirm(`${person.name} is already added to phonebook, replace
       the old number with a new one?`)
       phoneBookService.update(per)
-        .then(() => { phoneBookService.getAll().then(() => { }) })
+        .then(() => {
+          setMessage(`Added ${person.name}`)
+          phoneBookService.getAll().then(() => { })
+        })
     } else {
       phoneBookService.create(person).then(() => {
-        phoneBookService.getAll().then(res => setPersons(res))
+        phoneBookService.getAll().then(res => {
+          setMessage(`Added ${person.name}`)
+          setPersons(res)
+        })
       })
     }
   }
@@ -64,6 +73,8 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
+      {message ? <p className="succesfull">{message}</p> : ''}
+      
       <Filter fun={filterNames} />
 
       <h3>Add new</h3>
