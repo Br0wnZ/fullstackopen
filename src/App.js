@@ -14,6 +14,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
 
   useEffect(() => {
     phoneBookService.getAll().then(res => setPersons(res))
@@ -65,8 +66,14 @@ const App = () => {
     phoneBookService.getPerson(event.target.id).then(res => {
       window.confirm(`Delete ${res.name}?`)
       phoneBookService.remove(res.id).then(() =>
-        phoneBookService.getAll().then(res => setPersons(res)))
+        phoneBookService.getAll().then(res => setPersons(res))
+      )
     })
+      .catch(() => {
+        setMessage(null)
+        setError(`Information of this contact has already been removed
+      from the server`)
+      })
   }
 
   return (
@@ -74,7 +81,9 @@ const App = () => {
       <h2>Phonebook</h2>
 
       {message ? <p className="succesfull">{message}</p> : ''}
-      
+
+      {error ? <p className="error">{error}</p> : ''}
+
       <Filter fun={filterNames} />
 
       <h3>Add new</h3>
